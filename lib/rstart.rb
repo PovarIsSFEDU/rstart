@@ -4,7 +4,7 @@ require 'thor'
 
 # Docs
 class RStart < Thor
-  class_option :verbose, type: :boolean, aliases: "-v", desc: 'Verbose/No-verbose mode'
+  class_option :verbose, type: :boolean, aliases: '-v', desc: 'Verbose/No-verbose mode'
   class_option :help, type: :boolean, aliases: '-h', desc: 'Help about used command'
 
   desc 'new -p [path] -s [seed_file]', 'Create a new rails app in [path] with a [seed] props and names'
