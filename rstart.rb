@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'thor'
+require_relative 'file_generation/dir_hierarchy_generator'
+require_relative 'utilities/enums/generation_method'
 
 # Docs
 class RStart < Thor
@@ -19,11 +21,28 @@ class RStart < Thor
         return
       end
     end
-    DirHierarchyGenerator.new.create_project options[:path], options[:project_name], options[:generation_mod], options[:seed]
+
+    if options[:project_name].nil?
+      if options[:seed].nil?
+        DirHierarchyGenerator.new.create_project options[:path]
+      else
+        DirHierarchyGenerator.new.create_project options[:path], "app", GenerationMethod::CUSTOM, options[:seed]
+      end
+    else
+      if options[:seed].nil?
+        DirHierarchyGenerator.new.create_project options[:path], options[:project_name]
+      else
+        DirHierarchyGenerator.new.create_project options[:path], options[:project_name], GenerationMethod::CUSTOM, options[:seed]
+      end
+    end
   end
 
   method_option :path, type: :string, aliases: '-p',
                 desc: 'Define path',
+                for: :new
+
+  method_option :project_name, type: :string, aliases: '--name',
+                desc: 'Set name for generated project. Default name is \"app\"',
                 for: :new
 
   method_option :seed, type: :string, aliases: '-s',
