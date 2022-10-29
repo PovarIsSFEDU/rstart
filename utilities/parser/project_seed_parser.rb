@@ -2,6 +2,7 @@
 
 require 'json'
 require 'yaml'
+require 'pathname'
 require_relative '../seed_settings'
 require_relative '../exceptions/file_not_exist'
 require_relative '../exceptions/not_supported'
@@ -16,27 +17,22 @@ class ProjectSeedParser
     when '.json'
       seed_file = File.open(@seed_file_path)
       data = JSON.load seed_file
+      puts(data.class)
       SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'], data['additional_props'])
-      # p = SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'], data['additional_props'])
-      # puts(data)
     when '.yml'
-      seed_file = YAML.load_file(@seed_file_path)
-      data = seed_file.inspect
+      seed_file = File.open(@seed_file_path)
+      data = YAML.load seed_file
       SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'], data['additional_props'])
-      # p = SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'], data['additional_props'])
-      # puts(p)
     else
       raise NotSupported, 'This file extension is not supported!'
     end
   end
 
-  def initialize(path = './seed', ext = '.json', strategy = SeedStrategy::PARSE_ALL)
-    raise FileNotExist, "Provided file doesn't exist!" unless File.exist? path.concat ext
+  def initialize(path = './seed', strategy = SeedStrategy::PARSE_ALL)
+    raise FileNotExist, "Provided file doesn't exist!" unless Pathname.new(path).exist?
 
     @seed_file_path = path
-    @seed_file_ext = ext
+    @seed_file_ext = File.extname(path)
     @seed_strategy = strategy
   end
 end
-
-ProjectSeedParser.new('C:/Users/lukas/Desktop/Projects/ruby_projects/rstart/lib/utilities/parser/seed', '.json').try_parse
