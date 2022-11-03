@@ -1,2 +1,0 @@
-class ControllerGenerator
-end

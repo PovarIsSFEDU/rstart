@@ -89,11 +89,11 @@ class DirHierarchyGenerator
   end
 
   def set_custom_properties(project_dir, settings)
-    puts("Release")
+    #puts("Release")
   end
 
   def set_custom_dependencies(project_dir, settings)
-    puts("Release")
+    #puts("Release")
   end
 
   # Функция определения стратегии создания проекта (default, custom)
