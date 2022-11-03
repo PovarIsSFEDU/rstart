@@ -17,12 +17,25 @@ class ProjectSeedParser
     when '.json'
       seed_file = File.open(@seed_file_path)
       data = JSON.load seed_file
-      puts(data.class)
-      SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'], data['additional_props'])
+
+      if data['dependencies'] == nil ||
+        data['props'] == nil ||
+        data['hierarchy'] == nil
+        raise ParamError, "Invalid format of json seed file!"
+      end
+
+      SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'])
     when '.yml'
       seed_file = File.open(@seed_file_path)
       data = YAML.load seed_file
-      SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'], data['additional_props'])
+
+      if data['dependencies'] == nil ||
+        data['props'] == nil ||
+        data['hierarchy'] == nil
+        raise ParamError, "Invalid format of yml seed file!"
+      end
+
+      SeedSettings.new(data['dependencies'], data['props'], data['hierarchy'])
     else
       raise NotSupported, 'This file extension is not supported!'
     end

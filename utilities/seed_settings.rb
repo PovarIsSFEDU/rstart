@@ -2,12 +2,11 @@
 
 # Doc
 class SeedSettings
-  attr_accessor :dependencies, :props, :hierarchy, :additional_props
+  attr_accessor :dependencies, :props, :hierarchy
 
-  def initialize(deps, props, hierc, add_props)
+  def initialize(deps, props, hierc)
     @dependencies = deps
     @props = props
     @hierarchy = hierc
-    @additional_props = add_props
   end
 end
