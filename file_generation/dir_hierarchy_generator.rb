@@ -33,6 +33,10 @@ class DirHierarchyGenerator
     settings.hierarchy.each {
       |app_ierarhy|
       if app_ierarhy['type'].eql? 'folder'
+        if app_ierarhy['children'] == nil
+          raise ParamError, "Invalid format of ierarhy properties!"
+        end
+
         create_project project_dir, app_ierarhy['name']
 
         app_folder = File.join(project_dir, app_ierarhy['name'])
@@ -85,11 +89,11 @@ class DirHierarchyGenerator
   end
 
   def set_custom_properties(project_dir, settings)
-
+    puts("Release")
   end
 
   def set_custom_dependencies(project_dir, settings)
-
+    puts("Release")
   end
 
   # Функция определения стратегии создания проекта (default, custom)
