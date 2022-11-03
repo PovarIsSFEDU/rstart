@@ -22,6 +22,9 @@ class RStart < Thor
       end
     end
 
+    system('gem install mini_portile2')
+    system('gem install nokogiri -- --use-system-libraries')
+
     if options[:project_name].nil?
       if options[:seed].nil?
         DirHierarchyGenerator.new.create_project options[:path]
